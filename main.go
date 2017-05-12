@@ -57,7 +57,15 @@ func main() {
 	events, err := srv.Events.List("e5dtcl0a60cnlu00ma9mses6sk@group.calendar.google.com").ShowDeleted(false).
 		SingleEvents(true).TimeMin(tMin).TimeMax(tMax).MaxResults(99).OrderBy("startTime").Do()
 	if err != nil {
-		log.Fatalf("Unable to retrieve next ten of the user's events. %v", err)
+		log.Fatalf("Unable to retrieve next events. %v", err)
+	}
+
+	if (len(events.Items) > 0) && (len(events.Items) < 4){
+		events, err = srv.Events.List("e5dtcl0a60cnlu00ma9mses6sk@group.calendar.google.com").ShowDeleted(false).
+			SingleEvents(true).TimeMin(tMin).MaxResults(4).OrderBy("startTime").Do()
+		if err != nil {
+			log.Fatalf("Unable to retrieve next events. %v", err)
+		}
 	}
 
 	// fmt.Println("Upcoming events:")
