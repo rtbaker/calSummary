@@ -8,20 +8,27 @@ import (
 //	"net/http"
 //	"net/url"
 //	"os"
-//	"os/user"
-//	"path/filepath"
+	"os/user"
 	"time"
 	"golang.org/x/net/context"
 //	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/calendar/v3"
+	"path/filepath"
 )
 
 
 func main() {
 	ctx := context.Background()
 
-	b, err := ioutil.ReadFile("./CalProject.json")
+	usr, err := user.Current()
+	if err != nil {
+		log.Fatal( err )
+	}
+	
+	serviceCredsFile := filepath.Join(usr.HomeDir, ".CalProject.json")
+
+	b, err := ioutil.ReadFile(serviceCredsFile)
 	if err != nil {
 		log.Fatalf("Unable to read credentials file: %v", err)
 	}
