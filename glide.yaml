@@ -1,0 +1,5 @@
+package: github.com/rtbaker/calSummary
+import:
+- package: google.golang.org/api
+  subpackages:
+  - calendar/v3
